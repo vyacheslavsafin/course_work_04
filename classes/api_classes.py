@@ -47,30 +47,31 @@ class HeadHunterAPI(GetAPI):
                 break
         return self.vacancies
 
-    class SuperJobAPI(GetAPI):
-        """
-        класс для работы с API SuperJob
-        """
 
-        def get_vacancies(self, query: str) -> dict:
-            print(f'\nПолучение данных с {SUPER_JOB_URL}...')
-            headers = {'X-Api-App-Id': SUPER_JOB_API_KEY}
-            params = {
-                'keywords': query,
-                'page': 0,
-                'count': 100,
-                'no_agreement': 1
-            }
+class SuperJobAPI(GetAPI):
+    """
+    класс для работы с API SuperJob
+    """
+
+    def get_vacancies(self, query: str) -> dict:
+        print(f'\nПолучение данных с {SUPER_JOB_URL}...')
+        headers = {'X-Api-App-Id': SUPER_JOB_API_KEY}
+        params = {
+            'keywords': query,
+            'page': 0,
+            'count': 100,
+            'no_agreement': 1
+        }
+        response = requests.get(SUPER_JOB_URL, headers=headers, params=params)
+        result_page = response.json()
+        self.vacancies = result_page['objects']
+        while len(result_page['objects']) == 100:
+            print(f"Загружено страниц c вакансиями: {params['page'] + 1}")
+            params['page'] += 1
             response = requests.get(SUPER_JOB_URL, headers=headers, params=params)
             result_page = response.json()
-            self.vacancies = result_page['objects']
-            while len(result_page['objects']) == 100:
-                print(f"Загружено страниц c вакансиями: {params['page'] + 1}")
-                params['page'] += 1
-                response = requests.get(SUPER_JOB_URL, headers=headers, params=params)
-                result_page = response.json()
-                if result_page.get('objects'):
-                    self.vacancies.extend(result_page['objects'])
-                else:
-                    break
-            return self.vacancies
+            if result_page.get('objects'):
+                self.vacancies.extend(result_page['objects'])
+            else:
+                break
+        return self.vacancies
