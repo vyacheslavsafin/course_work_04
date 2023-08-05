@@ -106,3 +106,26 @@ def sorted_by_published_date(filtered_list):
     for vac in sorted_list:
         vac["published_date"] = vac["published_date"].strftime("%d-%m-%Y")
     return sorted_list
+
+
+def print_info(top_n_vacancies, vacancies_list):
+    """
+    Вывод информации о вакансиях в консоль
+    :param top_n_vacancies:
+    :param vacancies_list:
+    :return:
+    """
+    counter = 0
+    print("-" * 170)
+    for vac in vacancies_list:
+        vac.description = vac.description.replace("\n", "")
+        print(f"Должность: {vac.profession}\n"
+              f"Компания: {vac.company}\n"
+              f"Зарплата: {vac.salary_from}\n"
+              f"Описание: {vac.description[:150]}\n"
+              f"Дата публикации: {vac.published_date}\n"
+              f"Ссылка: {vac.url}")
+        counter += 1
+        if counter == top_n_vacancies:
+            break
+        print("-" * 170)
