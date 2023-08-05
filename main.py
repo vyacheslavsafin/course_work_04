@@ -1,6 +1,6 @@
 from classes.api_classes import HeadHunterAPI, SuperJobAPI
 from classes.json_saver import JSONSaver
-from src.utils import all_vacancies
+from src.utils import *
 
 
 def user_interaction():
@@ -42,6 +42,9 @@ def user_interaction():
     if not filtered_vacs:
         print("Нет вакансий, соответствующих заданным критериям.")
         return
+
+    print(f"Отфильтрованных вакансий {len(filtered_vacs)}")
+
 
 if __name__ == "__main__":
     user_interaction()
