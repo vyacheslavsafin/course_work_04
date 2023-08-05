@@ -56,6 +56,8 @@ def user_interaction():
 
     print(f"Отфильтрованных вакансий {len(salary_vacs)}")
 
+    finally_vacs = Vacancy.finally_sorted(sorted_by_date)  # Спсок отсортированных вакансий по дате
+
 
 if __name__ == "__main__":
     user_interaction()

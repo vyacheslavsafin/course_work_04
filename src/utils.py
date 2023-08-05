@@ -83,3 +83,26 @@ def filtered_by_salary(all_vacs, salary):
                 if vac['salary_to'] >= salary:
                     filtered_vacs.append(vac)
     return filtered_vacs
+
+
+def sorted_by_published_date(filtered_list):
+    """
+    Функция форматирования даты публикации к ISO формату, а так же
+    сортировки вакансий по дате публикации и выводу списка
+    начиная с самой свежей вакансии
+    :param filtered_list: список отфильтрованных по зарплате вакансий
+    :return:
+    """
+    for vac in filtered_list:
+        if "superjob.ru" in vac["url"]:
+            vac["published_date"] = datetime.fromtimestamp(vac["published_date"])
+            vac["published_date"] = vac["published_date"].strftime("%d-%m-%Y %H:%M:%S")
+            vac["published_date"] = datetime.strptime(vac["published_date"], "%d-%m-%Y %H:%M:%S")
+        else:
+            vac["published_date"] = datetime.fromisoformat(vac["published_date"])
+            vac["published_date"] = vac["published_date"].strftime("%d-%m-%Y %H:%M:%S")
+            vac["published_date"] = datetime.strptime(vac["published_date"], "%d-%m-%Y %H:%M:%S")
+    sorted_list = sorted(filtered_list, key=lambda x: x["published_date"], reverse=True)
+    for vac in sorted_list:
+        vac["published_date"] = vac["published_date"].strftime("%d-%m-%Y")
+    return sorted_list
