@@ -56,8 +56,15 @@ def user_interaction():
 
     print(f"Отфильтрованных вакансий {len(salary_vacs)}")
 
+    while True:
+        top_n = input("Введите количество вакансий для вывода в топ N: ")
+        if top_n.isdigit():
+            top_n = int(top_n)
+            break
+
     finally_vacs = Vacancy.finally_sorted(sorted_by_date)  # Спсок отсортированных вакансий по дате
 
+    print_info(top_n, finally_vacs)
 
 if __name__ == "__main__":
     user_interaction()
