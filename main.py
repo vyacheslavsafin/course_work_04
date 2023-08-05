@@ -1,5 +1,6 @@
 from classes.api_classes import HeadHunterAPI, SuperJobAPI
 from classes.json_saver import JSONSaver
+from src.utils import all_vacancies
 
 
 def user_interaction():
@@ -21,6 +22,12 @@ def user_interaction():
     json_vacancies.to_json("hh_vacancies.json", hh_vacancies)  # Сохраняем в JSON файл вакансии с HH.ru
     json_vacancies.to_json("superjob_vacancies.json", superjob_vacancies) # Сохраняем в JSON файл вакансии с SuperJob
 
+    all = all_vacancies(hh_vacancies, superjob_vacancies)  # Формируем единый список всех вакансий
+
+    json_vacancies.vacancies_to_json("all_vacancies.json", all)  # Сохраняем в JSON файл список всех вакансий
+
+    all_vacs = json_vacancies.load_from_json("all_vacancies.json")  # Получаем список всех вакансий с нужными полями
+    print(all_vacs)
 
 if __name__ == "__main__":
     user_interaction()
