@@ -24,10 +24,24 @@ def user_interaction():
 
     all = all_vacancies(hh_vacancies, superjob_vacancies)  # Формируем единый список всех вакансий
 
+    if not all:  # Исключаем неверный ввод ключевого значения поиска
+        print("Нет вакансий, соответствующих заданным критериям.")
+        return
+
     json_vacancies.vacancies_to_json("all_vacancies.json", all)  # Сохраняем в JSON файл список всех вакансий
 
     all_vacs = json_vacancies.load_from_json("all_vacancies.json")  # Получаем список всех вакансий с нужными полями
-    print(all_vacs)
+    print(f"Найдено {len(all_vacs)} вакансий")
+
+    filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
+    if filter_words:
+        filtered_vacs = filtered_vacancies(all_vacs, filter_words)
+    else:
+        filtered_vacs = all_vacs
+
+    if not filtered_vacs:
+        print("Нет вакансий, соответствующих заданным критериям.")
+        return
 
 if __name__ == "__main__":
     user_interaction()
