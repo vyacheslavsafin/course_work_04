@@ -15,9 +15,12 @@ def user_interaction():
 
     # Получение вакансий с разных платформ
     hh_vacancies = hh_api.get_vacancies(search_query)
-    print(hh_vacancies)
     superjob_vacancies = superjob_api.get_vacancies(search_query)
-    print(superjob_vacancies)
+
+    json_vacancies = JSONSaver()
+
+    json_vacancies.to_json("hh_vacancies.json", hh_vacancies)
+    json_vacancies.to_json("superjob_vacancies.json", superjob_vacancies)
 
 
 if __name__ == "__main__":
