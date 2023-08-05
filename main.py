@@ -1,6 +1,5 @@
 from classes.api_classes import HeadHunterAPI, SuperJobAPI
 from classes.json_saver import JSONSaver
-import json
 
 
 def user_interaction():
@@ -17,10 +16,10 @@ def user_interaction():
     hh_vacancies = hh_api.get_vacancies(search_query)
     superjob_vacancies = superjob_api.get_vacancies(search_query)
 
-    json_vacancies = JSONSaver()
+    json_vacancies = JSONSaver()  # Создаем экземпляр класса для сохранения в JSON файл
 
-    json_vacancies.to_json("hh_vacancies.json", hh_vacancies)
-    json_vacancies.to_json("superjob_vacancies.json", superjob_vacancies)
+    json_vacancies.to_json("hh_vacancies.json", hh_vacancies)  # Сохраняем в JSON файл вакансии с HH.ru
+    json_vacancies.to_json("superjob_vacancies.json", superjob_vacancies) # Сохраняем в JSON файл вакансии с SuperJob
 
 
 if __name__ == "__main__":
