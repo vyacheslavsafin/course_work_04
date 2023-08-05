@@ -1,4 +1,5 @@
 from classes.vacancy import Vacancy
+from datetime import datetime
 
 
 def all_vacancies(hh_vacancies, superjob_vacancies):
