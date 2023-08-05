@@ -41,3 +41,25 @@ def all_vacancies(hh_vacancies, superjob_vacancies):
     for vac in all_vacancies:
         vacs.append(vac.__dict__)
     return all_vacancies
+
+
+def filtered_vacancies(all_vacs, words):
+    """
+    Функция для отбора вакансий по дополнительным ключевым словам
+    :param all_vacs: список вакансий
+    :param words: ключевые слова
+    :return:
+    """
+    filtered_vacs = []
+    for vac in all_vacs:
+        for word in words:
+            if word.lower() in vac['profession'].lower():
+                filtered_vacs.append(vac)
+                break
+            elif word.lower() in vac['description'].lower():
+                filtered_vacs.append(vac)
+                break
+            elif word.lower() in vac['responsibility'].lower():
+                filtered_vacs.append(vac)
+                break
+    return filtered_vacs
