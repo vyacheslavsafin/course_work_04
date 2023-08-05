@@ -47,6 +47,7 @@ class HeadHunterAPI(GetAPI):
                 break
         return self.vacancies
 
+
 class SuperJobAPI(GetAPI):
     """
     класс для работы с API SuperJob
