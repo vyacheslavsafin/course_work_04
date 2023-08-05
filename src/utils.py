@@ -122,7 +122,7 @@ def print_info(top_n_vacancies, vacancies_list):
         vac.description = vac.description.replace("\n", "")
         print(f"Должность: {vac.profession}\n"
               f"Компания: {vac.company}\n"
-              f"Зарплата: {vac.salary_from}\n"
+              f"Зарплата: {formatted_salary(vac)}\n"
               f"Описание: {vac.description[:150]}\n"
               f"Дата публикации: {vac.published_date}\n"
               f"Ссылка: {vac.url}")
@@ -130,3 +130,16 @@ def print_info(top_n_vacancies, vacancies_list):
         if counter == top_n_vacancies:
             break
         print("-" * 170)
+
+
+def formatted_salary(vac):
+    """
+    Функция для корректного отображения зарплаты
+    """
+    if vac.salary_from and vac.salary_to:
+        if vac.salary_from != 0 and vac.salary_to != 0:
+            return f"от {vac.salary_from} до {vac.salary_to} рублей"
+    if vac.salary_from is None or vac.salary_from == 0:
+        return f"до {vac.salary_to} рублей"
+    if vac.salary_to is None or vac.salary_to == 0:
+        return f"от {vac.salary_from} рублей"
