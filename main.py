@@ -33,6 +33,7 @@ def user_interaction():
     all_vacs = json_vacancies.load_from_json("all_vacancies.json")  # Получаем список всех вакансий с нужными полями
     print(f"Найдено {len(all_vacs)} вакансий")
 
+    # Фильтрация вакансий по дополнительным ключевым словам
     filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split()
     if filter_words:
         filtered_vacs = filtered_vacancies(all_vacs, filter_words)
@@ -44,6 +45,16 @@ def user_interaction():
         return
 
     print(f"Отфильтрованных вакансий {len(filtered_vacs)}")
+
+    # Фильтрация вакансий по зарплате
+    while True:
+        salary = input("Введите желаемую зарплату: ")
+        if salary.isdigit():
+            salary = int(salary)
+            break
+    salary_vacs = filtered_by_salary(filtered_vacs, salary)
+
+    print(f"Отфильтрованных вакансий {len(salary_vacs)}")
 
 
 if __name__ == "__main__":

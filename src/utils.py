@@ -63,3 +63,23 @@ def filtered_vacancies(all_vacs, words):
                 filtered_vacs.append(vac)
                 break
     return filtered_vacs
+
+
+def filtered_by_salary(all_vacs, salary):
+    """
+    Функция фильтрующая отобранные вакансии по зарплате
+    Не включает в список вакансии с валютой отличной от Российского рубля
+    :param all_vacs: список отфильтрованных по ключевым словам вакансий
+    :param salary: указанная от пользователя желаемая зарплата
+    :return:
+    """
+    filtered_vacs = []
+    for vac in all_vacs:
+        if vac['currency'] == "RUR" or vac['currency'] == "rub":
+            if vac['salary_from']:
+                if vac['salary_from'] >= salary:
+                    filtered_vacs.append(vac)
+            elif vac['salary_to']:
+                if vac['salary_to'] >= salary:
+                    filtered_vacs.append(vac)
+    return filtered_vacs
