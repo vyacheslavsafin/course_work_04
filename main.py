@@ -20,7 +20,7 @@ def user_interaction():
     json_vacancies = JSONSaver()  # Создаем экземпляр класса для сохранения в JSON файл
 
     json_vacancies.to_json("hh_vacancies.json", hh_vacancies)  # Сохраняем в JSON файл вакансии с HH.ru
-    json_vacancies.to_json("superjob_vacancies.json", superjob_vacancies) # Сохраняем в JSON файл вакансии с SuperJob
+    json_vacancies.to_json("superjob_vacancies.json", superjob_vacancies)  # Сохраняем в JSON файл вакансии с SuperJob
 
     all = all_vacancies(hh_vacancies, superjob_vacancies)  # Формируем единый список всех вакансий
 
@@ -52,21 +52,32 @@ def user_interaction():
         if salary.isdigit():
             salary = int(salary)
             break
-    salary_vacs = filtered_by_salary(filtered_vacs, salary)
+
+    salary_vacs = filtered_by_salary(filtered_vacs, salary)  # Список отфильтрованных вакансий по зарплате
 
     print(f"Отфильтрованных вакансий {len(salary_vacs)}")
 
-    sorted_by_date = sorted_by_published_date(salary_vacs)
+    sorted_by_date = sorted_by_published_date(salary_vacs)  # Список отсортированных вакансий по дате
 
+    # Вывод n-вакансий в консоль
     while True:
         top_n = input("Введите количество вакансий для вывода в топ N: ")
         if top_n.isdigit():
             top_n = int(top_n)
             break
 
-    finally_vacs = Vacancy.finally_sorted(sorted_by_date)  # Список отсортированных вакансий по дате
+    finally_vacs = Vacancy.finally_sorted(sorted_by_date)
 
     print_info(top_n, finally_vacs)
+
+    # Сохранение отсортированных по всем параметром вакансий в JSON файл
+    while True:
+        save_vac = input("Вы хотите сохранить вакансии в JSON файл? (y/n): ")
+        if save_vac.lower() == "y":
+            json_vacancies.vacancies_to_json("all_vacancies.json", finally_vacs)
+            break
+        elif save_vac.lower() == "n":
+            break
 
 
 if __name__ == "__main__":
